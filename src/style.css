@@ -1,0 +1,215 @@
+.musabaka_text {
+  text-align: center;
+  color: black;
+  font-weight: 800;
+  padding-top: 20px;
+  font-family: ui-serif;
+  font-size: 40px;
+}
+
+.nav_background {
+  object-fit: contain;
+  /* background-image: url("https://skjmcc.com/wp-content/uploads/2018/09/hdrskjmcc.jpg"); */
+}
+
+.nav_banner_img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.wrapper {
+  padding: 20px;
+  border: 2px solid black;
+  background-color: #777;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  width: 50%;
+}
+
+.wrapper h5 {
+  color: white;
+  font-weight: 800;
+  font-size: 30px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap");
+
+body {
+  box-sizing: border-box;
+  color: #220f5f;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 0 10px;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+.title {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table_wrapper {
+  position: relative;
+}
+
+.login_button {
+  position: absolute;
+  top: 18px;
+  right: 28px;
+  z-index: 2;
+}
+
+tr th {
+  font-size: 18px;
+  padding: 12px;
+  border: 1px solid #eeeeee;
+  text-align: left;
+  background-color: rgba(217, 221, 146, 0.2);
+}
+
+tr td {
+  border: 1px solid #eeeeee;
+  text-align: left;
+}
+
+input {
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  width: 91%;
+  padding: 12px 12px;
+  font-family: "Poppins", sans-serif;
+}
+
+input:hover {
+  background-color: #fffaf3;
+}
+
+input:focus {
+  outline: 1px solid #ccc;
+  border: 1px solid #ccc;
+}
+
+.centered-heading {
+  text-align: center;
+  font-size: 30px;
+}
+
+.option {
+  border: none;
+}
+
+.tableHead {
+  background-color: #0f67c1;
+  position: relative;
+}
+
+.no-border-select {
+  border: none;
+  background-color: white;
+  width: 100%;
+  /* You can add additional styling here if needed */
+}
+
+body {
+  background-color: #000;
+}
+h1 {
+  color: #ffffff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+}
+.rainbow-btn {
+  /* margin: 50px auto; */
+  width: 650px;
+  text-align: center;
+  position: relative;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: block;
+  z-index: 2;
+  overflow: hidden;
+  padding: 8px;
+  height: 100px;
+}
+.rainbow-btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    #4fcf70,
+    #fad648,
+    #a767e5,
+    #12bcfe,
+    #44ce7b
+  );
+  background-size: 50% 100%;
+}
+.rainbow-btn span {
+  position: relative;
+  z-index: 2;
+  /* padding: .875rem 2; */
+  font-size: 1.1rem;
+  text-decoration: none;
+  align-items: center;
+  background: #000;
+  border-radius: 3px;
+  display: block;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.rainbow-btn:focus:before,
+.rainbow-btn:hover:before {
+  animation: rainbow-btn 0.75s linear infinite;
+}
+
+@keyframes rainbow-btn {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Media query for screens with a maximum width of 768px (e.g., tablets) */
+@media (max-width: 768px) {
+  .container {
+    text-align: center;
+  }
+
+  .rainbow-btn span {
+    display: flex;
+
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    text-align: center; /* Center the content horizontally for even smaller screens */
+  }
+
+  .rainbow-btn span {
+    display: flex;
+    font-size: 30px; /* Example font size for mobile screens */
+    /* Add any other necessary adjustments for mobile screens */
+  }
+}
