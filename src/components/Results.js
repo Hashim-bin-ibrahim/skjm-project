@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -12,6 +12,86 @@ export default function ResultChart() {
     { column1: "General" },
     { column1: "Alumni" },
   ];
+
+  const [show, setShow] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [authorized, setAuthorized] = useState(true);
+  const [eventLinks, setEventLinks] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState(""); // Initialize selectedCategory
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [selectedBoysEvent, setSelectedBoysEvent] = useState("");
+  const [selectedGirlsEvent, setSelectedGirlsEvent] = useState("");
+  const [selectedOthersEvent, setSelectedOthersEvent] = useState("");
+
+  console.log("selected Event   => ", selectedEvent);
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLoginClick = () => {
+    // Check if the entered username and password match the predefined values
+    if (username === user && password === pass) {
+      setAuthorized(true);
+      setShow(false);
+    } else {
+      setAuthorized(false);
+    }
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleEventLinkChange = (category, event, link) => {
+    console.log("handle cat===> ", category);
+    console.log("handle event===> ", event);
+    console.log("handle link===> ", link);
+
+    setEventLinks((prevLinks) => ({
+      ...prevLinks,
+      [category]: {
+        ...(prevLinks[category] || {}),
+        [event]: link,
+      },
+    }));
+  };
+
+  const updateEventLinksAndStore = (category, event, link) => {
+    // Update the eventLinks state
+    setEventLinks((prevLinks) => ({
+      ...prevLinks,
+      [category]: {
+        ...(prevLinks[category] || {}),
+        [event]: link,
+      },
+    }));
+
+    // Store the updated eventLinks data in sessionStorage
+    sessionStorage.setItem("eventLinks", JSON.stringify(eventLinks));
+  };
+
+  const handleAddLink = () => {
+    if (selectedCategory && selectedEvent) {
+      // Check if both category and event are selected
+      const newLink = "YOUR_GOOGLE_DRIVE_LINK"; // Replace with your actual link
+      setEventLinks((prevLinks) => ({
+        ...prevLinks,
+        [selectedCategory]: {
+          ...(prevLinks[selectedCategory] || {}),
+          [selectedEvent]: newLink,
+        },
+      }));
+    }
+  };
+
+  const user = "admin1323";
+  const pass = "7034848181";
 
   const Events = {
     Boys: {
@@ -146,47 +226,145 @@ export default function ResultChart() {
             {Categories.map((item, index) => (
               <tr key={index}>
                 <td>
-                  <select className="no-border-select">
-                    <option>{item.column1}</option>{" "}
-                    {/* Show the category name initially */}
+                  <select
+                    className="no-border-select"
+                    onChange={(e) => setSelectedBoysEvent(e.target.value)}
+                  >
+                    <option>{item.column1}</option> // kiidies, sub junior
+                    ect...
                     {Events.Boys[item.column1] ? (
                       Events.Boys[item.column1].map((eventName, i) => (
-                        <option key={i}>{eventName}</option>
+                        <option key={i} value={eventName}>
+                          {eventName} // islamic song , story telling ect ...
+                        </option>
                       ))
                     ) : (
                       <option>{item.column1}</option>
                     )}
                   </select>
-                </td>
-                <td>
-                  {Events.Girls[item.column2] &&
-                  Events.Girls[item.column2].length > 0 ? (
-                    <select className="no-border-select">
-                      <option>{item.column2}</option>
-                      {Events.Girls[item.column2].map((eventName, i) => (
-                        <option key={i}>{eventName}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <div>{item.column2}</div>
+                  {authorized && (
+                    <div className="d-flex">
+                      <input
+                        type="text"
+                        placeholder="Enter Google Drive link"
+                        onChange={
+                          (e) =>
+                            handleEventLinkChange(
+                              item.column1,
+                              selectedBoysEvent,
+                              e.target.value
+                            ) // Pass eventName here
+                        }
+                        value={
+                          eventLinks[item.column1]?.[selectedBoysEvent] || ""
+                        }
+                      />
+                      <button
+                        onClick={(e) =>
+                          updateEventLinksAndStore(
+                            item.column1,
+                            selectedBoysEvent,
+                            eventLinks
+                          )
+                        }
+                      >
+                        Add
+                      </button>
+                    </div>
                   )}
                 </td>
                 <td>
-                  {Events.Others[item.column3] &&
-                  Events.Others[item.column3].length > 0 ? (
-                    <select className="no-border-select">
-                      <option>{item.column3}</option>{" "}
-                      {/* Show the category name initially */}
-                      {Events.Others[item.column3] ? (
-                        Events.Others[item.column3].map((eventName, i) => (
-                          <option key={i}>{eventName}</option>
-                        ))
-                      ) : (
-                        <option>{item.column3}</option>
-                      )}
-                    </select>
-                  ) : (
-                    <div>{item.column3}</div>
+                  <select
+                    className="no-border-select"
+                    onChange={(e) => setSelectedGirlsEvent(e.target.value)}
+                  >
+                    <option>{item.column2}</option>
+                    {Events.Girls[item.column2] ? (
+                      Events.Girls[item.column2].map((eventName, i) => (
+                        <option key={i} value={eventName}>
+                          {eventName}
+                        </option>
+                      ))
+                    ) : (
+                      <option>{item.column2}</option>
+                    )}
+                  </select>
+                  {authorized && Events.Girls[item.column2] && (
+                    <div className="d-flex">
+                      <input
+                        type="text"
+                        placeholder="Enter Google Drive link"
+                        onChange={
+                          (e) =>
+                            handleEventLinkChange(
+                              item.column2,
+                              selectedGirlsEvent,
+                              e.target.value
+                            ) // Pass eventName here
+                        }
+                        value={
+                          eventLinks[item.column2]?.[selectedGirlsEvent] || ""
+                        }
+                      />
+                      <button
+                        onClick={(e) =>
+                          updateEventLinksAndStore(
+                            item.column2,
+                            selectedGirlsEvent,
+                            eventLinks
+                          )
+                        }
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
+                </td>
+                <td>
+                  <select
+                    className="no-border-select"
+                    onChange={(e) => setSelectedOthersEvent(e.target.value)}
+                  >
+                    <option>{item.column3}</option>
+                    {Events.Others[item.column3] ? (
+                      Events.Others[item.column3].map((eventName, i) => (
+                        <option key={i} value={eventName}>
+                          {eventName}
+                        </option>
+                      ))
+                    ) : (
+                      <option>{item.column3}</option>
+                    )}
+                  </select>
+                  {authorized && Events.Others[item.column3] && (
+                    <div className="d-flex">
+                      <input
+                        type="text"
+                        placeholder="Enter Google Drive link"
+                        onChange={
+                          (e) =>
+                            handleEventLinkChange(
+                              item.column3,
+                              selectedOthersEvent,
+                              e.target.value
+                            ) // Pass eventName here
+                        }
+                        value={
+                          eventLinks[item.column3]?.[selectedOthersEvent] || ""
+                        }
+                      />
+                      <button
+                        onClick={(e) =>
+                          updateEventLinksAndStore(
+                            item.column3,
+                            selectedOthersEvent,
+                            eventLinks
+                          )
+                        }
+                      >
+                        Add
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -204,14 +382,58 @@ export default function ResultChart() {
           </button>
           <ul className="dropdown-menu">
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={() => setShow(true)}
+              >
                 Login
               </a>
             </li>
-           
           </ul>
-          
         </div>
+
+        {/* modal start */}
+        {show && (
+          <div className="modal_overlay">
+            <div className="modal_wrapper">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Username"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  onChange={handleUsernameChange}
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Password"
+                  aria-label="Password"
+                  aria-describedby="basic-addon1"
+                  onChange={handlePasswordChange}
+                />
+              </div>
+              <button
+                className=" btn btn-primary centered-button "
+                onClick={() => setShow(false)}
+              >
+                Close
+              </button>
+              <button
+                className=" btn btn-primary centered-button ms-2"
+                onClick={handleLoginClick}
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        )}
+        {/* modal end */}
       </div>
     </div>
   );
